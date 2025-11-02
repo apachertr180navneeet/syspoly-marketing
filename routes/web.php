@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\{
     CustomerController,
+    BannerController
 };
 
 /*
@@ -50,7 +51,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::post('profile', [AdminAuthController::class, 'updateAdminProfile'])->name('update.profile');
 
-        foreach ([ 'customer' ] as $resource) {
+        foreach ([ 'customer','banner' ] as $resource) {
             Route::prefix($resource)->name("$resource.")->group(function () use ($resource) {
                 $controller = "App\Http\Controllers\Admin\\" . ucfirst($resource) . "Controller";
                 Route::get('/', [$controller, 'index'])->name('index');
@@ -62,6 +63,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
                 Route::post('update/{id}', [$controller, 'update'])->name('update');
                 if ($resource === 'customer') {
                     Route::post('import', [$controller, 'import'])->name('import');
+                }
+
+                if ($resource === 'banner') {
+                    Route::get('logo/{id}', [$controller, 'logo'])->name('logo');
+                    Route::post('logo/update/{id}', [$controller, 'logoupdate'])->name('logo.update');
                 }
             });
         }

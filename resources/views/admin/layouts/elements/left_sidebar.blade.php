@@ -25,6 +25,7 @@
 
 		@foreach([
 			['route' => 'admin.customer.index', 'text' => 'Customer'],
+			['route' => 'admin.banner.index', 'text' => 'Banner'],
 		] as $mastermenu)
 			<li class="menu-item {{ request()->routeIs($mastermenu['route']) ? 'active' : '' }}">
 				<a href="{{ route($mastermenu['route']) }}" class="menu-link">
